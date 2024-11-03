@@ -15,9 +15,8 @@ namespace SensorStream.Monitor
     {
         public string type { get; set; }
         public string name { get; set; }
-
+        public int sensorCount { get; set; }
         public IList<Sensor> sensors { get; set; }
-
     }
 
     public class Config
@@ -81,6 +80,7 @@ namespace SensorStream.Monitor
             {
                 type = type,
                 name = name,
+                sensorCount = sensors.Count,
                 sensors = sensors
             });
             sensors = new List<Sensor>();

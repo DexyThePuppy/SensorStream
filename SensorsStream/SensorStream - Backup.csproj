@@ -38,11 +38,13 @@
     <PackageReference Include="Fleck" />
     <PackageReference Include="HidSharp" />
     <PackageReference Include="LibreHardwareMonitorLib" />
+    <PackageReference Include="MicaWPF" />
     <PackageReference Include="Newtonsoft.Json" />
     <PackageReference Include="QRCoder" />
     <PackageReference Include="System.Management" />
     <PackageReference Include="TaskScheduler" />
-    <PackageReference Include="WPF-UI" />
+    <PackageReference Include="AltUI.WinForms" />
+    <PackageReference Include="WinBlur" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />

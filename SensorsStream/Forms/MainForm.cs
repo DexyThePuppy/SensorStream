@@ -7,6 +7,8 @@ using System.Windows.Forms;
 using SensorStream.Forms;
 using SensorStream.Monitor;
 using SensorStream.Transports;
+using System.Runtime.InteropServices;
+using System.Drawing;
 
 namespace SensorStream
 {
@@ -20,6 +22,7 @@ namespace SensorStream
         public Form1()
         {
             InitializeComponent();
+
             channelManager = new Manager();
             startupManager = new StartupManager();
             textBoxIP.Text = LocalIPAddress().ToString();
@@ -466,8 +469,7 @@ namespace SensorStream
             {
                 Hide();
             }
-
         }
-
     }
 }
+    
