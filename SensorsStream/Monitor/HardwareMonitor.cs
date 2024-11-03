@@ -1,4 +1,7 @@
 ﻿using LibreHardwareMonitor.Hardware;
+using System.IO;
+using System.Linq;
+using System;
 
 namespace SensorStream.Monitor
 {
@@ -36,12 +39,49 @@ namespace SensorStream.Monitor
             foreach (IHardware hardware in computer.Hardware)
             {
                 hardware.Update();
-                foreach (ISensor sensor in hardware.Sensors)
+                
+                if (hardware.HardwareType == HardwareType.Storage)
                 {
-                    // fill sensors 
-                    jsonFormatter.FillSensors(sensor.SensorType.ToString(), sensor.Name, sensor.Value);
+                    // Extract capacity from drive name
+                    float capacity = 0;
+                    
+                    if (hardware.Name.Contains("GB"))
+                    {
+                        // For NVMe drives that show capacity in name (e.g. "WD_BLACK SN850P for PS5 2000GB")
+                        string capacityStr = hardware.Name.Split(' ').LastOrDefault(x => x.EndsWith("GB"));
+                        if (float.TryParse(capacityStr?.Replace("GB", ""), out float parsedCapacity))
+                        {
+                            capacity = parsedCapacity;
+                        }
+                    }
+                    else if (hardware.Name.Contains("TB"))
+                    {
+                        // For drives showing TB in name (e.g. "Samsung SSD 870 EVO 2TB")
+                        string capacityStr = hardware.Name.Split(' ').LastOrDefault(x => x.EndsWith("TB"));
+                        if (float.TryParse(capacityStr?.Replace("TB", ""), out float parsedCapacity))
+                        {
+                            capacity = parsedCapacity * 1024; // Convert TB to GB
+                        }
+                    }
+
+                    if (capacity > 0)
+                    {
+                        jsonFormatter.FillSensors("Storage", "Total Capacity", capacity);
+                    }
+
+                    foreach (ISensor sensor in hardware.Sensors)
+                    {
+                        jsonFormatter.FillSensors(sensor.SensorType.ToString(), sensor.Name, sensor.Value);
+                    }
                 }
-                // fill hardwareContent
+                else
+                {
+                    foreach (ISensor sensor in hardware.Sensors)
+                    {
+                        jsonFormatter.FillSensors(sensor.SensorType.ToString(), sensor.Name, sensor.Value);
+                    }
+                }
+                
                 jsonFormatter.FillHardware(hardware.HardwareType.ToString(), hardware.Name);
             }
             return jsonFormatter.GetSerializedObject();
