@@ -49,6 +49,5 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.manifest" />
-    <None Include="SensorStream_TemporaryKey.pfx" />
   </ItemGroup>
 </Project>

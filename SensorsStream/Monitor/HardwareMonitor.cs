@@ -40,7 +40,25 @@ namespace SensorStream.Monitor
             {
                 hardware.Update();
                 
-                if (hardware.HardwareType == HardwareType.Storage)
+                if (hardware.HardwareType == HardwareType.Cpu)
+                {
+                    foreach (ISensor sensor in hardware.Sensors)
+                    {
+                        string sensorKey = $"cpu/{sensor.SensorType.ToString().ToLower()}/{sensor.Name.ToLower()}";
+                        jsonFormatter.FillSensors(sensorKey, sensor.Name, sensor.Value);
+                    }
+                }
+                else if (hardware.HardwareType == HardwareType.GpuNvidia || 
+                         hardware.HardwareType == HardwareType.GpuAmd || 
+                         hardware.HardwareType == HardwareType.GpuIntel)
+                {
+                    // Handle iGPU data
+                    foreach (ISensor sensor in hardware.Sensors)
+                    {
+                        jsonFormatter.FillSensors(sensor.SensorType.ToString(), sensor.Name, sensor.Value);
+                    }
+                }
+                else if (hardware.HardwareType == HardwareType.Storage)
                 {
                     // Extract capacity from drive name
                     float capacity = 0;

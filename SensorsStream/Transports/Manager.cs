@@ -58,12 +58,17 @@ namespace SensorStream.Transports
             while (running)
             {
                 string componentsData = monitor.GetSystemData();
-                //string componentsData = "test";
                 foreach (ITransport c in transportInstances)
                 {
-                    c.sendMessage(componentsData);
+                    if (c is WebSocketTransport wsTransport)
+                    {
+                        wsTransport.UpdateData(componentsData);
+                    }
+                    else
+                    {
+                        c.sendMessage(componentsData);
+                    }
                 }
-
                 Thread.Sleep(interval);
             }
             monitor.Close();
