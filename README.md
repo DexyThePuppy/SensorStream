@@ -1,4 +1,4 @@
-# <img src="SensorsStream\favicon.ico" width="32" height="32" alt="Sensor Stream Icon"> Sensor Stream 🎉
+# <img src="SensorsStream\favicon.ico" width="32" height="32" alt="Sensor Stream Icon"> Sensor Stream
 
 A real-time hardware monitoring tool that streams PC sensor data through WebSocket or UDP. 🌐
 
