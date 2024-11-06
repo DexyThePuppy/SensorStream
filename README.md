@@ -1,3 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1200">
+    <defs>
 <style>
 :root {
     /* GitHub Dark Theme Colors */
@@ -472,3 +474,4 @@ A real-time hardware monitoring tool that streams PC sensor data through WebSock
 </div>
 
 </div>
+</svg>
